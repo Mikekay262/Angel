@@ -6,6 +6,7 @@ data:
   warehouse_data: "data/raw/warehouse_data.xlsx"
   cleaned_consumption_data: "data/processed/cleaned_consumption_data.csv"
   cleaned_warehouse_data: "data/processed/cleaned_warehouse_data.csv"
+  inventory_path: "data/raw/inventory.csv"
 
 # Model paths
 models:

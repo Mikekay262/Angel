@@ -1,0 +1,29 @@
+ # Paths to data files
+data:
+  raw_data_path: "data/raw/"
+  processed_data_path: "data/processed/"
+  consumption_data: "data/raw/consumption_data.xlsx"
+  warehouse_data: "data/raw/warehouse_data.xlsx"
+  cleaned_consumption_data: "data/processed/cleaned_consumption_data.csv"
+  cleaned_warehouse_data: "data/processed/cleaned_warehouse_data.csv"
+
+# Model paths
+models:
+  word2vec_model_path: "models/word2vec/product_word2vec.model"
+
+# Streamlit settings
+streamlit:
+  port: 8501
+  debug: true
+
+# Parameters for Word2Vec
+word2vec:
+  vector_size: 100
+  window: 5
+  min_count: 1
+  sg: 1  # 1 for Skip-gram, 0 for CBOW
+
+# ANN (Approximate Nearest Neighbor) settings
+ann:
+  num_neighbors: 1  # Number of nearest neighbors to retrieve
+

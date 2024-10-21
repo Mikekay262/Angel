@@ -1,0 +1,49 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Virtual environments
+venv/
+.env/
+
+# Packages
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Logs and databases
+*.log
+*.sql
+*.sqlite
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Data files (you can modify this based on your project needs)
+data/raw/
+data/processed/
+*.csv
+*.xlsx
+*.json
+
+# Models
+models/
+*.h5
+*.pkl
+*.joblib
+
+# Environment files
+*.env
+
+# VS Code settings (optional)
+.vscode/

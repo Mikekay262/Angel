@@ -5,7 +5,6 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../scripts')))
 from preprocess import load_and_clean_inventory
 
-
 # Path to inventory file
 inventory_path = "data/raw/inventory.csv"
 
@@ -45,38 +44,38 @@ with st.form("order_entry_form", clear_on_submit=True):
             "Price": inventory_df[inventory_df['Item'] == item_selected]['Price'].values[0]
         })
 
-# Show the entered order data
+# Ensure that order_entries list is not empty
 if order_entries:
+    # Convert order entries into a DataFrame
     order_df = pd.DataFrame(order_entries)
     st.write("### Order Data Entered")
     st.write(order_df)
 
-# Function to calculate KPIs
-def calculate_kpis(order_df):
-    # Expected Revenue = Sum of (Quantity Requested * Price)
-    order_df['Expected Revenue'] = order_df['Quantity Requested'] * order_df['Price']
-    
-    # Actual Revenue = Sum of (Quantity Fulfilled * Price)
-    order_df['Actual Revenue'] = order_df['Quantity Fulfilled'] * order_df['Price']
-    
-    # Percent Revenue Actualized = (Actual Revenue / Expected Revenue) * 100
-    order_df['Percent Revenue Actualized'] = (order_df['Actual Revenue'] / order_df['Expected Revenue']) * 100
+    # Function to calculate KPIs
+    def calculate_kpis(order_df):
+        # Expected Revenue = Sum of (Quantity Requested * Price)
+        order_df['Expected Revenue'] = order_df['Quantity Requested'] * order_df['Price']
+        
+        # Actual Revenue = Sum of (Quantity Fulfilled * Price)
+        order_df['Actual Revenue'] = order_df['Quantity Fulfilled'] * order_df['Price']
+        
+        # Percent Revenue Actualized = (Actual Revenue / Expected Revenue) * 100
+        order_df['Percent Revenue Actualized'] = (order_df['Actual Revenue'] / order_df['Expected Revenue']) * 100
 
-    # Total Items
-    total_items = len(order_df)
+        # Total Items
+        total_items = len(order_df)
 
-    # Percentage of Fully Fulfilled Items
-    fully_fulfilled_items = len(order_df[order_df['Quantity Fulfilled'] == order_df['Quantity Requested']])
-    percent_fully_fulfilled = (fully_fulfilled_items / total_items) * 100
+        # Percentage of Fully Fulfilled Items
+        fully_fulfilled_items = len(order_df[order_df['Quantity Fulfilled'] == order_df['Quantity Requested']])
+        percent_fully_fulfilled = (fully_fulfilled_items / total_items) * 100
 
-    # Percentage of Partially Fulfilled Items
-    partially_fulfilled_items = len(order_df[(order_df['Quantity Fulfilled'] > 0) & 
-                                             (order_df['Quantity Fulfilled'] < order_df['Quantity Requested'])])
-    percent_partially_fulfilled = (partially_fulfilled_items / total_items) * 100
-    
-    return order_df, percent_fully_fulfilled, percent_partially_fulfilled
+        # Percentage of Partially Fulfilled Items
+        partially_fulfilled_items = len(order_df[(order_df['Quantity Fulfilled'] > 0) & 
+                                                 (order_df['Quantity Fulfilled'] < order_df['Quantity Requested'])])
+        percent_partially_fulfilled = (partially_fulfilled_items / total_items) * 100
+        
+        return order_df, percent_fully_fulfilled, percent_partially_fulfilled
 
-if order_entries:
     # Calculate KPIs
     order_df, percent_fully_fulfilled, percent_partially_fulfilled = calculate_kpis(order_df)
 
@@ -98,7 +97,10 @@ if order_entries:
     st.write(fulfillment_data)
     st.bar_chart(fulfillment_data.set_index("Fulfillment Type"))
 
-# Allow user to download the order data as CSV
-st.write("### Export Report")
-st.download_button(label="Download CSV", data=order_df.to_csv(index=False), 
-                   file_name=f"order_fulfillment_report_{customer_name}.csv", mime="text/csv")
+    # Allow user to download the order data as CSV
+    st.write("### Export Report")
+    st.download_button(label="Download CSV", data=order_df.to_csv(index=False), 
+                       file_name=f"order_fulfillment_report_{customer_name}.csv", mime="text/csv")
+
+else:
+    st.write("No order entries yet.")

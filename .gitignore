@@ -29,18 +29,6 @@ eggs/
 .DS_Store
 Thumbs.db
 
-# Data files (you can modify this based on your project needs)
-data/raw/
-data/processed/
-*.csv
-*.xlsx
-*.json
-
-# Models
-models/
-*.h5
-*.pkl
-*.joblib
 
 # Environment files
 *.env

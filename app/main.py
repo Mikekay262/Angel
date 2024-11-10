@@ -3,13 +3,14 @@ from order_fulfillment.order_tracker import order_fulfillment_tracker
 
 
 # Main title of the app
-st.title('Welcome to Angel App')
+st.title('Welcome to UCL Angel App')
+
 
 # Sidebar for navigation between different modules
 st.sidebar.title("Navigation")
 app_mode = st.sidebar.selectbox(
     "Choose the app mode",
-    ["Order Fulfillment Tracker", "Requisition Automation"]
+    ["Dashboard", "Order Fulfillment Tracker", "Requisition Automation"]
 )
 
 # Navigation logic to load different sections of the app

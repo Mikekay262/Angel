@@ -40,11 +40,6 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Sidebar Filters
-st.sidebar.header("Filters")
-date_range = st.sidebar.date_input("Select Date/Period", [date(2023, 1, 1), date(2023, 12, 31)])
-customers = st.sidebar.multiselect("Select Customer(s)", ["Customer A", "Customer B", "Customer C", "Customer D"])
-
 # Dummy data
 months = ['Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb']
 sales = np.random.randint(100, 500, size=len(months))

@@ -288,3 +288,5 @@ def order_fulfillment_tracker():
 
         else:
             st.write("No items added to the order yet. Please add items before submitting.")
+
+order_fulfillment_tracker()

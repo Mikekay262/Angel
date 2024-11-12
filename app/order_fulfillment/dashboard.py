@@ -7,7 +7,7 @@ from datetime import date
 from numerize import numerize  # Importing numerize for currency formatting
 
 # Set the page layout to wide mode
-st.set_page_config(layout="wide")
+#st.set_page_config(layout="wide")
 
 # Helper function to format large numbers as currency
 def format_currency(value):
@@ -49,7 +49,27 @@ weekly_data = pd.DataFrame({
 })
 
 # Header section
-st.title("Main Dashboard")
+st.header("Main Dashboard")
+
+st.subheader("Filter")
+#Add Filter
+col1, col2, col3 = st.columns(3)
+
+with col1:
+     Customer = st.selectbox(
+        "Client",
+        ("Client A", "Client B"), 
+        index=None,
+        placeholder= "Select a client",
+    )
+     
+with col2:
+    date_range = st.date_input("Select Date/Period", [date(2023, 1, 1), date(2023, 12, 31)])
+
+with col3:
+        st.button(label="Apply Filter",)
+
+st.write("---")
 
 # Top Metrics with formatted currency values
 with st.container():
@@ -73,9 +93,10 @@ with st.container():
     with col5:
         percentage_revenue_lost = "80%"  # This is a percentage, so no formatting is needed
         st.markdown(f'<div class="card"><div class="sub-metric">Percentage of Revenue Lost</div><div class="big-metric">{percentage_revenue_lost}</div></div>', unsafe_allow_html=True)
-
+    
+    
 # Monthly Spend Chart
-st.markdown("### Monthly Spend Analysis")
+st.markdown("### Monthly Spend Analysis") 
 with st.container():
     col1, col2 = st.columns([2, 1])
     

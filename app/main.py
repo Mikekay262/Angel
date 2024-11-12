@@ -1,65 +1,51 @@
 import os
+import sys
 import streamlit as st
+import app.utils.utils as ut
 
-# Session management
-if "page" not in st.session_state:
-    st.session_state.page = "dashboard"  # Default page
+st.set_page_config(
+    layout = 'wide',
+    page_title = 'UCL Angel App',
+)
 
-# Define page paths
+st.header( "Welcome to UCL Angel App", divider=True)
+# Add the parent directory of 'app' to sys.path
+sys.path.append("C:/Angel")
+
+# Dynamically build correct paths for each module
 base_dir = "C:/Angel"
-pages = {
-    "dashboard": os.path.join(base_dir, "app", "order_fulfillment", "dashboard.py"),
-    "data_tables": os.path.join(base_dir, "app", "data_tables.py"),
-    "alerts": os.path.join(base_dir, "reports", "alerts.py"),
-    "order_tracker": os.path.join(base_dir, "app", "order_fulfillment", "order_tracker.py"),
-    "demand_forecaster": os.path.join(base_dir, "app", "requisition_automation", "demand_forecast.py"),
-}
+dashboard_path = os.path.join(base_dir, "app", "order_fulfillment", "dashboard.py")
+data_tables_path = os.path.join(base_dir, "app", "data_tables.py")
+# alerts_path = os.path.join(base_dir, "reports", "alerts.py")
+order_tracker_path = os.path.join(base_dir, "app", "order_fulfillment", "order_tracker.py")
+demand_forecast_path = os.path.join(base_dir, "app", "requisition_automation", "demand_forecast.py")
+product_settings_path = os.path.join(base_dir, "app", "product_settings.py")
+login_path = os.path.join(base_dir, "app", "login.py")
 
-# Page function stubs (for demonstration, replace with imports if needed)
-def show_dashboard():
-    st.title("Dashboard")
-    st.write("This is the dashboard page.")
+#st.header("Welcome to UCL Angel App", divider=True)
 
-def show_data_tables():
-    st.title("Data Tables")
-    st.write("This is the data tables page.")
+# Define pages for navigation
+dashboard = st.Page(dashboard_path, title="Dashboard", icon=":material/bar_chart_4_bars:", default=True)
+data_tables = st.Page(data_tables_path, title="Data Tables", icon=":material/dataset:")
+# alerts = st.Page(alerts_path, title="System alerts", icon=":material/notification_important:")
+order_fulfillment_tracker = st.Page(order_tracker_path, title="Order Fulfillment Tracker", icon=":material/database:")
+demand_forecaster = st.Page(demand_forecast_path, title="Demand Forecaster", icon=":material/monitoring:")
+product_settings = st.Page(product_settings_path, title="Product Settings", icon=":material/settings:")
+login = st.Page(login_path, title="Login/Logout", icon=":material/logout:")
 
-def show_alerts():
-    st.title("Alerts")
-    st.write("This is the alerts page.")
+# Navigation configuration
+pg = st.navigation(
+    {
+        "Account": [login],
+        "Reports": [dashboard, data_tables],  # Alerts can be uncommented when implemented
+        "Tools": [order_fulfillment_tracker, demand_forecaster],
+        "Settings": [product_settings]
+    }
+)
 
-def show_order_tracker():
-    st.title("Order Tracker")
-    st.write("This is the order tracker page.")
+# Run the selected page
+pg.run()
 
-def show_demand_forecaster():
-    st.title("Demand Forecaster")
-    st.write("This is the demand forecaster page.")
-
-# Page Router
-def page_router():
-    page = st.session_state.page
-    if page == "dashboard":
-        show_dashboard()
-    elif page == "data_tables":
-        show_data_tables()
-    elif page == "alerts":
-        show_alerts()
-    elif page == "order_tracker":
-        show_order_tracker()
-    elif page == "demand_forecaster":
-        show_demand_forecaster()
-    else:
-        st.error("Page not found!")
-
-# Sidebar Navigation
-with st.sidebar:
-    st.header("Navigation")
-    st.button("Dashboard", on_click=lambda: st.session_state.update({"page": "dashboard"}))
-    st.button("Data Tables", on_click=lambda: st.session_state.update({"page": "data_tables"}))
-    st.button("Alerts", on_click=lambda: st.session_state.update({"page": "alerts"}))
-    st.button("Order Tracker", on_click=lambda: st.session_state.update({"page": "order_tracker"}))
-    st.button("Demand Forecaster", on_click=lambda: st.session_state.update({"page": "demand_forecaster"}))
-
-# Render Selected Page
-page_router()
+# Add version information at the bottom of the sidebar
+st.sidebar.write("**App Version:** 1.0.0")
+st.sidebar.write("© 2024 UCL Angel App")

@@ -305,4 +305,4 @@ OrderDate,Customer,City,Category,Product,Quantity,UnitPrice,TotalPrice
 2023-11-15,West,Boston,Snacks,Potato Chips,30.0,1.85,160.1
 2023-11-16,West,Boston,Snacks,Potato Chips,30.0,1.85,160.1
 2023-09-18,East,Boston,Bars,Carrot,40.0,0.05,2.0
-2024-11-12,ABRAHAM,Boston,Bars,Carrot,8855.0,58566.0,518601930.0
+2024-11-13,ABRAHAM,Boston,Bars,Carrot,5.0,8.0,40.0

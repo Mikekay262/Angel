@@ -7,7 +7,6 @@ from numerize.numerize import numerize  # Import numerize for compact number for
 from app.assets.styles.UI import *  # Make sure this exists and contains UI()
 from matplotlib import pyplot as plt
 from streamlit_extras.dataframe_explorer import dataframe_explorer
-from app.modules.order_fulfillment_tracker.add_data import add_data  # Import specific function
 
 theme_plotly = None  # Define theme_plotly
 

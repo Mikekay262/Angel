@@ -1,26 +1,25 @@
 import os
 import sys
 import streamlit as st
-import app.utils.utils as ut
 
-st.set_page_config(
-    layout = 'wide',
-    page_title = 'UCL Angel App',
-)
 
-st.header( "Welcome to UCL Angel App", divider=True)
+# Optional page layout and theme
+st.set_page_config(page_title="Analytics", page_icon="🌎", layout="wide")
+
+
+
+#st.header( "Welcome to UCL Angel App", divider=True)
 # Add the parent directory of 'app' to sys.path
 sys.path.append("C:/Angel")
 
 # Dynamically build correct paths for each module
 base_dir = "C:/Angel"
-dashboard_path = os.path.join(base_dir, "app", "order_fulfillment", "dashboard.py")
-data_tables_path = os.path.join(base_dir, "app", "data_tables.py")
-# alerts_path = os.path.join(base_dir, "reports", "alerts.py")
-order_tracker_path = os.path.join(base_dir, "app", "order_fulfillment", "order_tracker.py")
-demand_forecast_path = os.path.join(base_dir, "app", "requisition_automation", "demand_forecast.py")
-product_settings_path = os.path.join(base_dir, "app", "product_settings.py")
-login_path = os.path.join(base_dir, "app", "login.py")
+dashboard_path = os.path.join(base_dir, "app", "modules", "dashboard", "dashboard.py")
+data_tables_path = os.path.join(base_dir, "app", "modules", "data_tables", "data_tables.py")
+order_tracker_path = os.path.join(base_dir, "app", "modules", "order_fulfillment_tracker", "add_data.py")
+demand_forecast_path = os.path.join(base_dir, "app", "modules", "demand_forecaster", "forecaster.py")
+product_settings_path = os.path.join(base_dir, "app", "modules", "product_settings", "product_settings.py")
+login_path = os.path.join(base_dir, "app", "modules", "login", "login.py")
 
 #st.header("Welcome to UCL Angel App", divider=True)
 
@@ -33,8 +32,10 @@ demand_forecaster = st.Page(demand_forecast_path, title="Demand Forecaster", ico
 product_settings = st.Page(product_settings_path, title="Product Settings", icon=":material/settings:")
 login = st.Page(login_path, title="Login/Logout", icon=":material/logout:")
 
+
 # Navigation configuration
 pg = st.navigation(
+    
     {
         "Account": [login],
         "Reports": [dashboard, data_tables],  # Alerts can be uncommented when implemented

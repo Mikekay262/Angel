@@ -10,15 +10,22 @@ from app.assets.styles.UI import *  # Make sure this exists and contains UI()
 from matplotlib import pyplot as plt
 from streamlit_extras.dataframe_explorer import dataframe_explorer
 
+
+st.set_page_config(page_title="Dashboard", page_icon="📊", layout="wide")
+#st.title("Dashboard")
 theme_plotly = None  # Define theme_plotly
+
+# Styled header
+st.markdown(
+    "<h1 style='color:#002B50; margin-top: 20px;'>⚛ Order Fulfillment Dashboard</h1>",
+    unsafe_allow_html=True
+)
 
 def dashboard():
     # Load CSS Style
     with open('app/assets/styles/style.css') as f:
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
-    # Ensure UI function is defined in the imported module
-    UI()  
     
     # Load dataset
     df = pd.read_csv('app/assets/data/data.csv')
@@ -406,6 +413,11 @@ def dashboard():
             st.error(f"An error occurred during filtering: {e}")
     else:
         st.warning("Please select a valid date range.")
+        
+        
+        
+         # Ensure UI function is defined in the imported module
+    UI()  
 
 # Call the dashboard function to render the app
 dashboard()

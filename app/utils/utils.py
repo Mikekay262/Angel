@@ -1,14 +1,6 @@
 import pandas as pd
 import streamlit as st
-import altair as alt
-import streamlit as st
-import pandas as pd
-import plotly.express as px
-import seaborn as sns
 
-
-
-#utils for add_data.py
 def load_and_clean_inventory(file_path):
     """Load and clean the inventory dataset."""
     inventory_df = pd.read_csv(file_path)
@@ -70,7 +62,11 @@ def append_order_entry(item, quantity_ordered, quantity_fulfilled, inventory_df)
         "RevenueLost": revenue_lost,
     })
 
-##utils for dashboard.py
+#For Dashboard
+import pandas as pd
+import altair as alt
+
+
 def load_dataset(filepath):
     """Load dataset and preprocess."""
     df = pd.read_csv(filepath)
@@ -113,52 +109,30 @@ def prepare_fulfillment_metrics(df):
 
 
 def make_donut(input_response, input_text, input_color):
-                    # Set chart colors based on the input color
-                    color_mapping = {
-                        'blue': ['#29b5e8', '#155F7A'],
-                        'green': ['#27AE60', '#12783D'],  # Fully fulfilled
-                        'orange': ['#F39C12', '#875A12'],  # Partially fulfilled
-                        'red': ['#E74C3C', '#781F16'],  # Not fulfilled
-                    }
-                    chart_color = color_mapping.get(input_color, ['#CCCCCC', '#888888'])  # Default color
+    """Create a donut chart using Altair."""
+    color_mapping = {
+        'blue': ['#29b5e8', '#155F7A'],
+        'green': ['#27AE60', '#12783D'],
+        'orange': ['#F39C12', '#875A12'],
+        'red': ['#E74C3C', '#781F16'],
+    }
+    chart_color = color_mapping.get(input_color, ['#CCCCCC', '#888888'])
 
-                    # Data for the chart
-                    source = pd.DataFrame({
-                        "Topic": ['', input_text],
-                        "% value": [100 - input_response, input_response]
-                    })
-                    source_bg = pd.DataFrame({
-                        "Topic": ['', input_text],
-                        "% value": [100, 0]
-                    })
+    source = pd.DataFrame({
+        "Topic": ['', input_text],
+        "% value": [100 - input_response, input_response]
+    })
 
-                    # Plot foreground donut
-                    plot = alt.Chart(source).mark_arc(innerRadius=45, cornerRadius=25).encode(
-                        theta="% value",
-                        color=alt.Color("Topic:N",
-                                        scale=alt.Scale(
-                                            domain=[input_text, ''],
-                                            range=chart_color),
-                                        legend=None),
-                    ).properties(width=150, height=150)
+    plot = alt.Chart(source).mark_arc(innerRadius=45).encode(
+        theta="% value",
+        color=alt.Color("Topic:N", scale=alt.Scale(domain=[input_text, ''], range=chart_color)),
+    ).properties(width=150, height=150)
 
-                    # Text overlay on the donut chart
-                    text = plot.mark_text(align='center', color=chart_color[0], font="Lato", fontSize=20, fontWeight=600, fontStyle="italic").encode(
-                        text=alt.value(f'{input_response:.2f} %')
-                    )
+    text = plot.mark_text(align='center', color=chart_color[0], fontSize=20).encode(
+        text=alt.value(f'{input_response:.2f} %')
+    )
 
-                    # Background donut chart
-                    plot_bg = alt.Chart(source_bg).mark_arc(innerRadius=45, cornerRadius=20).encode(
-                        theta="% value",
-                        color=alt.Color("Topic:N",
-                                        scale=alt.Scale(
-                                            domain=[input_text, ''],
-                                            range=chart_color),
-                                        legend=None),
-                    ).properties(width=150, height=150)
-
-                    return plot_bg + plot + text
-
+    return plot + text
 
 
 def create_pareto_chart(df, group_by_column, value_column):

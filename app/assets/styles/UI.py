@@ -3,7 +3,7 @@ import streamlit as st
 def UI():
     # Add space using margin-top
     # Add space above the logo in the sidebar
-    st.sidebar.markdown("<div style='margin-top: 60px;'></div>", unsafe_allow_html=True)
+    st.sidebar.markdown("<div style='margin-top: 50px;'></div>", unsafe_allow_html=True)
     
     
     logo_url = "app/assets/images/logo.png"
